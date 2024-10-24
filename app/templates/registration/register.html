@@ -1,0 +1,30 @@
+<!-- register.html -->
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Cadastro Usuário{% endblock %}
+
+{% block content %}
+<div class="container">
+    <main>
+        <div class="row g-5">
+            <div class="">
+                <h4 class="mb-3">Cadastro de Usuário</h4>
+                <form class="needs-validation" method="post" action="" aria-labelledby="registration-form">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        {{ form|crispy }}
+
+                        <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                    </div>
+                </form>
+                <div class="text-center mt-3">
+                    <p>Já tem uma conta? <a href="{% url 'login' %}">Faça login aqui</a>.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+{% endblock %}

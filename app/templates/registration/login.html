@@ -1,0 +1,40 @@
+<!-- login.html -->
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Login - AWS Customer Support{% endblock %}
+
+{% block content %}
+<div class="main-container">
+  <div class="content">
+    <div class="left-side">
+      <h1>AWS</h1>
+      <p class="sub-heading">customer support</p>
+      <p>Presta serviços e apoio ao cliente nas áreas da Aeronáutica, Automação Industrial e representações nacionais e
+        internacionais. A equipe de AWS GROUP - CUSTOMER SUPPORT é composta por profissionais com mais de 15 anos de
+        experiência dedicados à prestação de serviços nas áreas de Aviação, Automação e Representações.</p>
+    </div>
+    <div class="right-side">
+      <form method="post" class="login-form">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.non_field_errors }}
+          <label for="{{ form.username.id_for_label }}">E-mail</label>
+          {{ form.username }}
+          {{ form.username.errors }}
+        </div>
+        <div class="form-group">
+          <label for="{{ form.password.id_for_label }}">Senha</label>
+          {{ form.password }}
+          {{ form.password.errors}}
+        </div>
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+      <div class="links">
+        <a href="{% url 'password_reset' %}">Esqueceu a senha?</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

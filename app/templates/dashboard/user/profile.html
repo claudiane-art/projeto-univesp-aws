@@ -1,0 +1,39 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+
+{% block title %}Perfil do Usuário{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <div class="profile-image-container">
+        {% if profile_image %}
+        <img class="profile-image rounded-circle" src="{{ profile_image.upload_to.url }}" alt="Profile Image">
+        {% else %}
+        <img src="{% static 'images/default_profile.jpg' %}" alt="Default Profile Image"
+            class="profile-image rounded-circle">
+        {% endif %}
+        <form method="post" enctype="multipart/form-data" class="p-3 upload-form">
+            {% csrf_token %}
+            <input type="file" name="profile_image" id="profile_image" accept="image/*" style="display: none;"
+                onchange="this.form.submit();">
+            <button type="button" class="btn btn-sm btn-primary"
+                onclick="document.getElementById('profile_image').click();">Trocar imagem</button>
+        </form>
+    </div>
+    <h3>@{{ user.username }}</h3>
+    <p>{{ user.email }}</p>
+
+    <div class="text-center">
+        <a href="{% url 'password_change' %}" class="btn btn-link">Trocar Senha</a>
+        <a href="{% url 'update_user_info' %}" class="btn btn-link">Alterar Informações</a>
+    </div>
+</div>
+<style>
+    .profile-image {
+        max-width: 120px;
+        max-height: 120px;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% block title %}Tarefas Disponíveis{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Tarefas Disponíveis</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Status</th>
+                <th>Requerente</th>
+                <th>Criado</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for work_request in work_requests %}
+            <tr>
+                <td>{{ work_request.title }}</td>
+                <td>{{ work_request.description }}</td>
+                <td>{{ work_request.status }}</td>
+                <td>{{ work_request.requester.username }}</td>
+                <td>{{ work_request.created_at }}</td>
+                <td>
+                    {% if work_request.requester == request.user %}
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#actionModal" data-action="cancel" data-work-request-id="{{ work_request.id }}">
+                        Cancelar
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#actionModal" data-action="apply" data-work-request-id="{{ work_request.id }}">
+                        Aplicar
+                    </button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

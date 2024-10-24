@@ -1,0 +1,35 @@
+services:
+  db:
+    container_name: db
+    image: postgres:16
+    restart: always
+    shm_size: 128mb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=app
+    ports:
+      - "5432:5432"
+
+  web:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - .:/code
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://app:app@db:5432/app
+
+volumes:
+  postgres_data:
